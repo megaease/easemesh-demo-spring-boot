@@ -1,0 +1,7 @@
+kind: Tenant
+apiVersion: mesh.megaease.com/v1alpla1
+metadata:
+  name: poc
+spec:
+  description: 'poc tenant'
+

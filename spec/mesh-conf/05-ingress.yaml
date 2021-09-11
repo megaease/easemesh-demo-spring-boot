@@ -1,0 +1,9 @@
+kind: Ingress
+apiVersion: mesh.megaease.com/v1alpla1
+metadata:
+  name: poc-ingress
+spec:
+  rules:
+  - paths:
+    - path: /greeting
+      backend: front-service

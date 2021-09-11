@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: poc
+  name: backend-service
+  annotations:
+    mesh.megaease.com/service-name: "backend-service"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-service
+  template:
+    metadata:
+      labels:
+        app: backend-service
+    spec:
+      containers:
+        - image: 10.0.20.1:5000/poc
+          name: backend-service
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
+          command: ["/bin/sh"]
+          args: ["-c", "java -server -jar  -Dspring.profiles.active=sit backend-service-0.0.1-SNAPSHOT.jar"]
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /poc/application-sit.yml
+              name: configmap-volume-0
+              subPath: application-sit.yml
+          ports:
+            - containerPort: 18080
+      volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+              - key: application-sit-yml
+                path: application-sit.yml
+            name: backend-service
+          name: configmap-volume-0
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-service
+  namespace: poc
+data:
+  application-sit-yml: |
+    server:
+      port: 18080
+
+
