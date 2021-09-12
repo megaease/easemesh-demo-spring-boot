@@ -16,7 +16,7 @@ spec:
         app: front-service
     spec:
       containers:
-        - image: 10.0.20.1:5000/poc
+        - image: zhaokundev/easemesh-springboot-demo
           name: front-service
           imagePullPolicy: IfNotPresent
           lifecycle:
