@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: poc
+  name: backend-canary-service
+  annotations:
+    mesh.megaease.com/service-name: "backend-service"
+    mesh.megaease.com/service-labels: "version=canary"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-canary-service
+  template:
+    metadata:
+      labels:
+        app: backend-canary-service
+    spec:
+      containers:
+        - image: zhaokundev/easemesh-springboot-demo
+          name: backend-canary-service
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
+          command: ["/bin/sh"]
+          args: ["-c", "java -server -jar  -Dspring.profiles.active=sit backend-canary-service-0.0.1-SNAPSHOT.jar"]
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /poc/application-sit.yml
+              name: configmap-volume-0
+              subPath: application-sit.yml
+          ports:
+            - containerPort: 18080
+      volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+              - key: application-sit-yml
+                path: application-sit.yml
+            name: backend-canary-service
+          name: configmap-volume-0
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-canary-service
+  namespace: poc
+data:
+  application-sit-yml: |
+    server:
+      port: 18080
+
+

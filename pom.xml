@@ -16,6 +16,7 @@
         <module>front-service</module>
         <module>middle-service</module>
         <module>backend-service</module>
+        <module>backend-canary-service</module>
     </modules>
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -51,17 +52,16 @@
                 <version>2.2.0.RELEASE</version>
                 <scope>compile</scope>
             </dependency>
-
-
         </dependencies>
     </dependencyManagement>
-
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>

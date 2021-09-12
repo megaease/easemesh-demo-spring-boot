@@ -8,11 +8,11 @@ public class Controller {
 
     @GetMapping("/greeting")
     public String greeting() {
-        return "greeting from backend\n";
+        return "greeting from canary backend service\n";
     }
 
     @GetMapping("/local")
     public String local() {
-        return "backend local ";
+        return "backend canary local ";
     }
 }
