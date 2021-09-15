@@ -16,7 +16,7 @@ spec:
         app: backend-service
     spec:
       containers:
-        - image: zhaokundev/easemesh-springboot-demo
+        - image: zhaokundev/easemesh-springboot-demo:jdk-slim
           name: backend-service
           imagePullPolicy: IfNotPresent
           lifecycle:
