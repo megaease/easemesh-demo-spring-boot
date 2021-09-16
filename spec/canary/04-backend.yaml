@@ -17,7 +17,7 @@ spec:
         app: backend-canary-service
     spec:
       containers:
-        - image: zhaokundev/easemesh-springboot-demo
+        - image: megaease/easemesh-springboot-demo:jdk-slim
           name: backend-canary-service
           imagePullPolicy: IfNotPresent
           lifecycle:

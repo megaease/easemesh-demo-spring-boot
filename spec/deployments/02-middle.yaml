@@ -16,7 +16,7 @@ spec:
         app: middle-service
     spec:
       containers:
-        - image: zhaokundev/easemesh-springboot-demo:jdk-slim
+        - image: megaease/easemesh-springboot-demo:jdk-slim
           name: middle-service
           imagePullPolicy: IfNotPresent
           lifecycle:
